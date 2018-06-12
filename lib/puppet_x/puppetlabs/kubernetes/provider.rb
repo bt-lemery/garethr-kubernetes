@@ -94,9 +94,12 @@ module PuppetX
         end
 
         def self.list_instances_of(type)
-          es_types = [ 'storage_class' ]
-          if es_types.include? type.to_s
-            call("get_#{type}es")
+          irregular_pluralization = {
+            'storage_class' => 'storage_classes',
+            'network_policy' => 'network_policies'
+          }
+          if irregular_pluralization.include? type.to_s
+            call("get_#{irregular_pluralization[type]}")
           else
             call("get_#{type}s")
           end

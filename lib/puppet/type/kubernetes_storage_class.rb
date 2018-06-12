@@ -18,12 +18,12 @@ StorageClasses are non-namespaced; the name of the storage class according to et
   validate do
     required_properties = [
     
-      'provisioner',
+      :provisioner,
     
     ]
     required_properties.each do |property|
       # We check for both places so as to cover the puppet resource path as well
-      if self[property.to_sym].nil? and self.provider.send(property) == :absent
+      if self[property].nil? and self.provider.send(property) == :absent
         fail "You must provide a #{property}"
       end
     end
