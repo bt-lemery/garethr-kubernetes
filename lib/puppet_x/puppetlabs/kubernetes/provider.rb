@@ -131,6 +131,10 @@ module PuppetX
             beta_client.send(method, *object)
           elsif storage_client.respond_to?(method)
             storage_client.send(method, *object)
+          elsif network_v1_client.respond_to?(method)
+            network_v1_client.send(method, *object)
+          elsif network_beta_client.respond_to?(method)
+            network_beta_client.send(method, *object)
           elsif policy_client.respond_to?(method)
             policy_client.send(method, *object)
           else
