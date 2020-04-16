@@ -81,6 +81,26 @@ module PuppetX
           add_headers(client)
         end
 
+        def self.network_v1_client
+          client = ::Kubeclient::Client.new(
+            "#{config.context.api_endpoint}/apis/networking.k8s.io",
+            config.context.api_version,
+            ssl_options: config.context.ssl_options,
+            auth_options: config.context.auth_options,
+          )
+          add_headers(client)
+        end
+
+        def self.network_beta_client
+          client = ::Kubeclient::Client.new(
+            "#{config.context.api_endpoint}/apis/networking.k8s.io",
+            "#{config.context.api_version}beta1",
+            ssl_options: config.context.ssl_options,
+            auth_options: config.context.auth_options,
+          )
+          add_headers(client)
+        end
+
         def self.policy_client
           client = ::Kubeclient::Client.new(
             "#{config.context.api_endpoint}/apis/policy",
