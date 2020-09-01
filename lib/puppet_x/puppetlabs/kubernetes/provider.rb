@@ -61,6 +61,16 @@ module PuppetX
           add_headers(client)
         end
 
+        def self.batch_client
+          client = ::Kubeclient::Client.new(
+            "#{config.context.api_endpoint}/apis/batch",
+            "#{config.context.api_version}",
+            ssl_options: config.context.ssl_options,
+            auth_options: config.context.auth_options,
+          )
+          add_headers(client)
+        end
+
         def self.beta_client
           client = ::Kubeclient::Client.new(
             "#{config.context.api_endpoint}/apis/extensions",
@@ -127,6 +137,8 @@ module PuppetX
             v1_client.send(method, *object)
           elsif apps_client.respond_to?(method)
             apps_client.send(method, *object)
+          elsif batch_client.respond_to?(method)
+            batch_client.send(method, *object)
           elsif beta_client.respond_to?(method)
             beta_client.send(method, *object)
           elsif storage_client.respond_to?(method)
